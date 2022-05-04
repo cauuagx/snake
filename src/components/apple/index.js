@@ -5,7 +5,8 @@ const Apple = ({position}) =>{
       <div
         style={{
           bottom:position.bottom+'px',
-          left:position.left+'px'
+          left:position.left+'px',
+          zIndex:5
         }}
         className={style.appleSize}>
         <img src="apple.svg" alt=""/>

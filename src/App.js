@@ -1,17 +1,27 @@
 import style from './App.module.sass'
 import {useEffect, useState} from "react";
-import Apple from "./components/apple";
 import createApple1 from "./functions/createApple1";
 import motionRule from "./functions/motionRule";
-import SnakePart from "./components/snakePart";
-
+import Snake from "./components/snake";
+import Apples from "./components/apples";
+import BackgroundOfPlayground from "./components/backgroundOfPlayground";
 function App() {
   const [currentPosition, setCurrentPosition] = useState([{
-    bottom: 0,
-    left: 0
-  }])
+    bottom: 280,
+    left: 360,
+    transform: 'rotate(270deg)',
+  },{
+    bottom: 280,
+    left: 320,
+    transform: 'rotate(270deg)',
+  },{
+    bottom: 280,
+    left: 280,
+    transform: 'rotate(270deg)',
+  }
+  ])
   const [applesPosition, setApplesPosition] = useState([])
-  const [motionDirection, setMotionDirection] = useState()
+  const [motionDirection, setMotionDirection] = useState('d')
   const [currentScore, setCurrentScore] = useState(0)
 
   const setMotionDirectionEffect = (button) => {
@@ -24,25 +34,17 @@ function App() {
     }, 2000)
   }, [currentScore])
   useEffect(() => {
-    motionRule(motionDirection, applesPosition, setApplesPosition, currentPosition, setCurrentPosition, currentScore, setCurrentScore)
+    motionRule(motionDirection, applesPosition, setApplesPosition, currentPosition,
+      setCurrentPosition, currentScore, setCurrentScore,setMotionDirection)
     document.addEventListener('keypress', setMotionDirectionEffect)
   }, [motionDirection])
 
   return (
     <div className={style.background}>
       <div className={style.playBoard}>
-        {
-          applesPosition.length > 0 &&
-          applesPosition.map((applePosition, index) => {
-            return <Apple position={applePosition} key={index} id={applePosition.id}/>
-          })
-        }
-        {
-            currentPosition.map((position, index) => <SnakePart
-              currentPosition={position}
-              key={index}
-            />)
-        }
+        <Apples applesPosition={applesPosition}/>
+        <Snake currentPosition={currentPosition}/>
+        <BackgroundOfPlayground/>
       </div>
       <div className={style.score}>
         <p>Score:{currentScore}</p>

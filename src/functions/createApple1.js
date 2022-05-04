@@ -4,16 +4,7 @@ const createApple = (applesPosition, setApplesPosition) => {
   if (applesPosition.length < 5) {
     console.log('Apple create')
     const randomPositionOfApple = () => {
-      function randomXPosition() {
-        while (true) {
-          const randomNumber = Math.round(Math.random() * 1161)
-          if (randomNumber % 40 === 0) {
-            return randomNumber
-          }
-        }
-      }
-
-      function randomYPosition() {
+      function randomXYPosition() {
         while (true) {
           const randomNumber = Math.round(Math.random() * 561)
           if (randomNumber % 40 === 0) {
@@ -21,10 +12,9 @@ const createApple = (applesPosition, setApplesPosition) => {
           }
         }
       }
-
       return {
-        bottom: randomYPosition(),
-        left: randomXPosition()
+        bottom: randomXYPosition(),
+        left: randomXYPosition()
       }
     }
     setApplesPosition(applesPosition.concat({...randomPositionOfApple(), id: uuidv4()}))
