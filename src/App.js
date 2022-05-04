@@ -19,15 +19,11 @@ function App() {
   }
 
   useEffect(() => {
-    console.log('Apple start creating')
     setTimeout(() => {
       createApple1(applesPosition, setApplesPosition)
-      console.log(applesPosition)
     }, 2000)
   }, [currentScore])
   useEffect(() => {
-    console.log('useEffectStart')
-    console.log(currentPosition)
     motionRule(motionDirection, applesPosition, setApplesPosition, currentPosition, setCurrentPosition, currentScore, setCurrentScore)
     document.addEventListener('keypress', setMotionDirectionEffect)
   }, [motionDirection])
@@ -47,13 +43,6 @@ function App() {
               key={index}
             />)
         }
-        {/*<div*/}
-        {/*  style={{*/}
-        {/*    bottom: currentPosition[0].bottom + 'px',*/}
-        {/*    left: currentPosition[0].left + 'px'*/}
-        {/*  }}*/}
-        {/*  className={style.head}*/}
-        {/*/>*/}
       </div>
       <div className={style.score}>
         <p>Score:{currentScore}</p>

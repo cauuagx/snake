@@ -10,7 +10,6 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
   switch (motionDirection) {
     case 'w':
       tik = setInterval(() => {
-        console.log(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom + STEPSIZE,
@@ -21,7 +20,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         }
         else{
-          if (currentPosition.length < (currentScore + 10) / 10) {
+          if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
           }
           else {
@@ -37,14 +36,12 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           bottom: currentPosition[0].bottom,
           left: currentPosition[0].left - STEPSIZE
         })
-        console.log(currentPosition)
-
         if (currentPosition[0].left < 0){
           currentPosition[0].left = 1160
           setCurrentPosition(currentPosition = [...currentPosition].filter((element, index) => index !== currentPosition.length - 1))
         }
         else{
-          if (currentPosition.length < (currentScore + 10) / 10){
+          if (currentPosition.length < (currentScore + 20) / 10){
             setCurrentPosition(currentPosition)
           }
           else{
@@ -55,7 +52,6 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
       break
     case 'd':
       tik = setInterval(() => {
-        console.log(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom,
@@ -65,7 +61,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           currentPosition[0].left = 0
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
-          if (currentPosition.length < (currentScore + 10) / 10) {
+          if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
           } else {
             setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
@@ -75,7 +71,6 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
       break
     case 's':
       tik = setInterval(() => {
-        console.log(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom - STEPSIZE,
@@ -85,7 +80,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           currentPosition[0].bottom = 560
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
-          if (currentPosition.length < (currentScore + 10) / 10) {
+          if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
           } else {
             setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
@@ -95,9 +90,6 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
       }, TICKRATE)
       break
     default:
-      console.log(currentPosition)
-      console.log('xyi')
-
       return
   }
 }
