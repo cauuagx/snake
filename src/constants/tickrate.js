@@ -1,2 +1,2 @@
-const TICKRATE = 200
+const TICKRATE = 150
 export default TICKRATE

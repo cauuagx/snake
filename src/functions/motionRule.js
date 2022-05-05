@@ -1,41 +1,36 @@
 import STEPSIZE from "../constants/stepsize";
 import TICKRATE from "../constants/tickrate";
-import checkAppleIsCollect from "./checkAppleIsCollect";
-import checkShakeIsDie from "./checkShakeIsDie";
+import checkAppleIsCollect from "./helpersForMotionRule/checkAppleIsCollect";
+import checkShakeIsDie from "./helpersForMotionRule/checkShakeIsDie";
+import checkBorder from "./helpersForMotionRule/checkBorder";
+import checkBorderAndSetPosition from "./helpersForMotionRule/checkBorderAndSetPosition";
 
 let tik;
 const motionRule = (motionDirection, applesPosition, setApplesPosition,
                     currentPosition, setCurrentPosition, currentScore, setCurrentScore,setMotionDirection) => {
   clearInterval(tik)
-
   switch (motionDirection) {
     case 'w':
       tik = setInterval(() => {
-        if (checkShakeIsDie(currentPosition)){
-          clearInterval(tik)
-          setMotionDirection(motionDirection=undefined)
-          setCurrentPosition(currentPosition=[{
-            bottom:0,
-            left:0
-          }])
-        }
+        checkShakeIsDie(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
+        console.log(currentPosition.length,'С такими заходит')
         currentPosition.unshift({
           bottom: currentPosition[0].bottom + STEPSIZE,
           left: currentPosition[0].left,
           transform:'rotate(180deg)'
         })
-        if(currentPosition[0].bottom > 560){
-          currentPosition[0].bottom = 0
-          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
-        }
-        else{
-          if (currentPosition.length < (currentScore + 20) / 10) {
-            setCurrentPosition(currentPosition)
-          }
-          else {
+        console.log(currentPosition.length,'C такими приходит')
+        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+          console.log(currentPosition.length,'C такими уходит')
+        } else {
+          // if (currentPosition.length < (currentScore + 20) / 10) {
+          //   console.log('penis')
+          //   setCurrentPosition(currentPosition)
+          // } else {
+            console.log('penis',currentPosition.length)
             setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
-          }
+          // }
         }
       }, TICKRATE)
       break
@@ -55,15 +50,11 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           left: currentPosition[0].left - STEPSIZE,
           transform:'rotate(90deg)'
         })
-        if (currentPosition[0].left < 0){
-          currentPosition[0].left = 560
-          setCurrentPosition(currentPosition = [...currentPosition].filter((element, index) => index !== currentPosition.length - 1))
-        }
-        else{
-          if (currentPosition.length < (currentScore + 20) / 10){
+        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+        } else {
+          if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
-          }
-          else{
+          } else {
             setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
           }
         }
@@ -85,9 +76,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           left: currentPosition[0].left + STEPSIZE,
           transform:'rotate(270deg)'
         })
-        if (currentPosition[0].left > 560) {
-          currentPosition[0].left = 0
-          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
+        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
@@ -113,9 +102,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           left: currentPosition[0].left,
           transform:'rotate(0deg)'
         })
-        if (currentPosition[0].bottom < 0) {
-          currentPosition[0].bottom = 560
-          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
+        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
