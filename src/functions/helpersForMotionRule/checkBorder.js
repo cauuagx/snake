@@ -22,8 +22,6 @@ const checkBorder = (motionDirection,currentPosition,setCurrentPosition) =>{
       default:
         break
     }
-    setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
-    console.log(currentPosition.length,'тут меняеться')
     return true
   }
   return false

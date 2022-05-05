@@ -3,7 +3,6 @@ import TICKRATE from "../constants/tickrate";
 import checkAppleIsCollect from "./helpersForMotionRule/checkAppleIsCollect";
 import checkShakeIsDie from "./helpersForMotionRule/checkShakeIsDie";
 import checkBorder from "./helpersForMotionRule/checkBorder";
-import checkBorderAndSetPosition from "./helpersForMotionRule/checkBorderAndSetPosition";
 
 let tik;
 const motionRule = (motionDirection, applesPosition, setApplesPosition,
@@ -14,23 +13,19 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
       tik = setInterval(() => {
         checkShakeIsDie(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
-        console.log(currentPosition.length,'С такими заходит')
         currentPosition.unshift({
           bottom: currentPosition[0].bottom + STEPSIZE,
           left: currentPosition[0].left,
           transform:'rotate(180deg)'
         })
-        console.log(currentPosition.length,'C такими приходит')
         if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
-          console.log(currentPosition.length,'C такими уходит')
+          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
-          // if (currentPosition.length < (currentScore + 20) / 10) {
-          //   console.log('penis')
-          //   setCurrentPosition(currentPosition)
-          // } else {
-            console.log('penis',currentPosition.length)
+          if (currentPosition.length < (currentScore + 20) / 10) {
+            setCurrentPosition(currentPosition)
+          } else {
             setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
-          // }
+          }
         }
       }, TICKRATE)
       break
@@ -51,6 +46,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           transform:'rotate(90deg)'
         })
         if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
@@ -77,6 +73,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           transform:'rotate(270deg)'
         })
         if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
@@ -103,6 +100,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           transform:'rotate(0deg)'
         })
         if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+          setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
             setCurrentPosition(currentPosition)
@@ -110,7 +108,6 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
             setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
           }
         }
-
       }, TICKRATE)
       break
     default:
