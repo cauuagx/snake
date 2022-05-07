@@ -1,6 +1,6 @@
 
 
-const checkBorder = (motionDirection,currentPosition,setCurrentPosition) =>{
+const checkBorder = (motionDirection,currentPosition) =>{
   if(currentPosition[0].left < 0||
     currentPosition[0].left > 560 ||
     currentPosition[0].bottom < 0 ||

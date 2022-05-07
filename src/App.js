@@ -5,6 +5,7 @@ import motionRule from "./functions/motionRule";
 import Snake from "./components/snake";
 import Apples from "./components/apples";
 import BackgroundOfPlayground from "./components/backgroundOfPlayground";
+let motionDirection = 'd'
 function App() {
   const [currentPosition, setCurrentPosition] = useState([{
     bottom: 280,
@@ -21,11 +22,11 @@ function App() {
   }
   ])
   const [applesPosition, setApplesPosition] = useState([])
-  const [motionDirection, setMotionDirection] = useState('d')
   const [currentScore, setCurrentScore] = useState(0)
 
-  const setMotionDirectionEffect = (button) => {
-    setMotionDirection(button.key)
+  const setMotionDirectionEffect = ({key}) => {
+    motionDirection = key
+    console.log(motionDirection)
   }
 
   useEffect(() => {
@@ -35,10 +36,11 @@ function App() {
   }, [currentScore])
   useEffect(() => {
     motionRule(motionDirection, applesPosition, setApplesPosition, currentPosition,
-      setCurrentPosition, currentScore, setCurrentScore,setMotionDirection)
-    document.addEventListener('keypress', setMotionDirectionEffect)
+      setCurrentPosition, currentScore, setCurrentScore)
   }, [motionDirection])
-
+  useEffect(()=>{
+    document.addEventListener('keypress', setMotionDirectionEffect)
+    },[])
   return (
     <div className={style.background}>
       <div className={style.playBoard}>

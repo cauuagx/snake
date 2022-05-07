@@ -5,20 +5,21 @@ import checkShakeIsDie from "./helpersForMotionRule/checkShakeIsDie";
 import checkBorder from "./helpersForMotionRule/checkBorder";
 
 let tik;
+let prevMotionDirecton;
 const motionRule = (motionDirection, applesPosition, setApplesPosition,
-                    currentPosition, setCurrentPosition, currentScore, setCurrentScore,setMotionDirection) => {
-  clearInterval(tik)
-  switch (motionDirection) {
-    case 'w':
+                    currentPosition, setCurrentPosition, currentScore, setCurrentScore) => {
+    if(motionDirection === 'w' && prevMotionDirecton !== 's') {
+      clearInterval(tik)
+      prevMotionDirecton = motionDirection
       tik = setInterval(() => {
         checkShakeIsDie(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom + STEPSIZE,
           left: currentPosition[0].left,
-          transform:'rotate(180deg)'
+          transform: 'rotate(180deg)'
         })
-        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+        if (checkBorder(motionDirection, currentPosition)) {
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
@@ -28,24 +29,19 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           }
         }
       }, TICKRATE)
-      break
-    case 'a':
+    }
+    else if (motionDirection === 'a' && prevMotionDirecton !== 'd') {
+      clearInterval(tik)
+      prevMotionDirecton = motionDirection
       tik = setInterval(() => {
-        if (checkShakeIsDie(currentPosition)){
-          clearInterval(tik)
-          setMotionDirection(motionDirection=undefined)
-          setCurrentPosition(currentPosition=[{
-            bottom:0,
-            left:0,
-          }])
-        }
+        checkShakeIsDie(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom,
           left: currentPosition[0].left - STEPSIZE,
-          transform:'rotate(90deg)'
+          transform: 'rotate(90deg)'
         })
-        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+        if (checkBorder(motionDirection, currentPosition)) {
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
@@ -55,24 +51,19 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           }
         }
       }, TICKRATE)
-      break
-    case 'd':
+    }
+    else if (motionDirection === 'd' && prevMotionDirecton !== 'a') {
+      clearInterval(tik)
+      prevMotionDirecton = motionDirection
       tik = setInterval(() => {
-        if (checkShakeIsDie(currentPosition)){
-          clearInterval(tik)
-          setMotionDirection(motionDirection=undefined)
-          setCurrentPosition(currentPosition=[{
-            bottom:0,
-            left:0,
-          }])
-        }
+        checkShakeIsDie(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom,
           left: currentPosition[0].left + STEPSIZE,
-          transform:'rotate(270deg)'
+          transform: 'rotate(270deg)'
         })
-        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+        if (checkBorder(motionDirection, currentPosition)) {
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
@@ -82,24 +73,19 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           }
         }
       }, TICKRATE)
-      break
-    case 's':
+    }
+    else if(motionDirection ==='s'  &&  prevMotionDirecton!=='w') {
+      clearInterval(tik)
+      prevMotionDirecton = motionDirection
       tik = setInterval(() => {
-        if (checkShakeIsDie(currentPosition)){
-          clearInterval(tik)
-          setMotionDirection(motionDirection=undefined)
-          setCurrentPosition(currentPosition=[{
-            bottom:0,
-            left:0
-          }])
-        }
+        checkShakeIsDie(currentPosition)
         checkAppleIsCollect(applesPosition, currentPosition, setApplesPosition, currentScore, setCurrentScore)
         currentPosition.unshift({
           bottom: currentPosition[0].bottom - STEPSIZE,
           left: currentPosition[0].left,
-          transform:'rotate(0deg)'
+          transform: 'rotate(0deg)'
         })
-        if (checkBorder(motionDirection,currentPosition,setCurrentPosition)) {
+        if (checkBorder(motionDirection, currentPosition)) {
           setCurrentPosition(currentPosition = currentPosition.filter((element, index) => index !== currentPosition.length - 1))
         } else {
           if (currentPosition.length < (currentScore + 20) / 10) {
@@ -109,9 +95,6 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
           }
         }
       }, TICKRATE)
-      break
-    default:
-      return
-  }
+    }
 }
 export default motionRule
