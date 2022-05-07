@@ -26,7 +26,7 @@ function App() {
 
   const setMotionDirectionEffect = ({key}) => {
     motionDirection = key
-    console.log(motionDirection)
+    console.log(motionDirection,'Такой сейчас ключ')
   }
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function App() {
   useEffect(() => {
     motionRule(motionDirection, applesPosition, setApplesPosition, currentPosition,
       setCurrentPosition, currentScore, setCurrentScore)
-  }, [motionDirection])
+  }, [])
   useEffect(()=>{
     document.addEventListener('keypress', setMotionDirectionEffect)
     },[])
