@@ -3,11 +3,9 @@ import TICKRATE from "../constants/tickrate";
 import checkAppleIsCollect from "./helpersForMotionRule/checkAppleIsCollect";
 import checkShakeIsDie from "./helpersForMotionRule/checkShakeIsDie";
 import checkBorder from "./helpersForMotionRule/checkBorder";
-
-let tik;
 let prevMotionDirection;
 const motionRule = (motionDirection, applesPosition, setApplesPosition,
-                    currentPosition, setCurrentPosition, currentScore, setCurrentScore) => {
+                    currentPosition, setCurrentPosition, currentScore, setCurrentScore,motionRuleInit,setMotionRuleInit) => {
     console.log(motionDirection)
     if(motionDirection === 'w' && prevMotionDirection !== 's') {
       prevMotionDirection = motionDirection
@@ -28,8 +26,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
         }
       }
       setTimeout(()=>{
-        motionRule(motionDirection, applesPosition, setApplesPosition,
-          currentPosition, setCurrentPosition, currentScore, setCurrentScore)
+        setMotionRuleInit(motionRuleInit+=1)
       },TICKRATE)
     }
     else if (motionDirection === 'a' && prevMotionDirection !== 'd') {
@@ -51,8 +48,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
         }
       }
       setTimeout(()=>{
-        motionRule(motionDirection, applesPosition, setApplesPosition,
-          currentPosition, setCurrentPosition, currentScore, setCurrentScore)
+        setMotionRuleInit(motionRuleInit+=1)
       },TICKRATE)
     }
     else if (motionDirection === 'd' && prevMotionDirection !== 'a') {
@@ -74,10 +70,8 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
         }
         }
       setTimeout(()=>{
-        motionRule(motionDirection, applesPosition, setApplesPosition,
-          currentPosition, setCurrentPosition, currentScore, setCurrentScore)
+        setMotionRuleInit(motionRuleInit+=1)
       },TICKRATE)
-
     }
     else if(motionDirection ==='s'  &&  prevMotionDirection!=='w') {
       prevMotionDirection = motionDirection
@@ -98,8 +92,7 @@ const motionRule = (motionDirection, applesPosition, setApplesPosition,
         }
       }
       setTimeout(()=>{
-        motionRule(motionDirection, applesPosition, setApplesPosition,
-          currentPosition, setCurrentPosition, currentScore, setCurrentScore)
+        setMotionRuleInit(motionRuleInit+=1)
       },TICKRATE)
     }
 }
