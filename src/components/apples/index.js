@@ -1,7 +1,7 @@
 import React from 'react'
 import Apple from "../apple";
 
-const Apples = ({applesPosition}) =>{
+export default React.memo(function Apples({applesPosition}){
   return(
     <React.Fragment>
       {
@@ -12,6 +12,4 @@ const Apples = ({applesPosition}) =>{
       }
     </React.Fragment>
   )
-}
-
-export default Apples
+})
