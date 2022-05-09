@@ -1,11 +1,10 @@
 import style from './App.module.sass'
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import createApple1 from "./functions/createApple1";
 import motionRule from "./functions/motionRule";
 import Snake from "./components/snake";
 import Apples from "./components/apples";
 import BackgroundOfPlayground from "./components/backgroundOfPlayground";
-let motionDirection = 'd'
 function App() {
   const [currentPosition, setCurrentPosition] = useState([{
     bottom: 280,
@@ -24,9 +23,9 @@ function App() {
   const [applesPosition, setApplesPosition] = useState([])
   const [motionRuleInit,setMotionRuleInit] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
-
+  const motionDirection = useRef('d')
   const setMotionDirectionEffect = ({key}) => {
-    motionDirection = key
+    motionDirection.current = key
     console.log(motionDirection,'Такой сейчас ключ')
   }
 
@@ -36,7 +35,7 @@ function App() {
     }, 2000)
   }, [currentScore])
   useEffect(() => {
-    motionRule(motionDirection, applesPosition, setApplesPosition, currentPosition,
+    motionRule(motionDirection.current, applesPosition, setApplesPosition, currentPosition,
       setCurrentPosition, currentScore, setCurrentScore,motionRuleInit,setMotionRuleInit)
   }, [motionRuleInit])
   useEffect(()=>{
