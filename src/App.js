@@ -23,6 +23,8 @@ function App() {
   const [applesPosition, setApplesPosition] = useState([])
   const [motionRuleInit,setMotionRuleInit] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
+  const prevMotionDirection = useRef()
+  const timerRef = useRef()
   const motionDirection = useRef('d')
   const setMotionDirectionEffect = ({key}) => {
     motionDirection.current = key
@@ -36,7 +38,7 @@ function App() {
   }, [currentScore])
   useEffect(() => {
     motionRule(motionDirection.current, applesPosition, setApplesPosition, currentPosition,
-      setCurrentPosition, currentScore, setCurrentScore,motionRuleInit,setMotionRuleInit)
+      setCurrentPosition, currentScore, setCurrentScore,motionRuleInit,setMotionRuleInit,timerRef,prevMotionDirection)
   }, [motionRuleInit])
   useEffect(()=>{
     document.addEventListener('keypress', setMotionDirectionEffect)
